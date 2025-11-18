@@ -1,0 +1,197 @@
+# Default Configuration for pfSense Multi-Agent System
+
+# System-wide settings
+system:
+  name: "pfSense Multi-Agent System"
+  version: "1.0.0"
+  environment: "development"  # development, staging, production
+  log_level: "INFO"
+  max_agents: 50
+
+# Communication settings
+communication:
+  rabbitmq:
+    url: "amqp://guest:guest@localhost:5672/"
+    exchange: "pfsense_agents"
+    exchange_type: "topic"
+    heartbeat_interval: 30
+    connection_timeout: 10
+    retry_attempts: 3
+    retry_delay: 5
+
+# LLM Integration settings
+llm:
+  provider: "openai"  # openai, anthropic, local
+  api_url: "https://api.openai.com/v1"
+  model: "gpt-4"
+  max_tokens: 1500
+  temperature: 0.7
+  timeout: 30
+  rate_limit: 100  # requests per minute
+
+# pfSense connection settings
+pfsense:
+  host: "192.168.1.1"
+  ssh_port: 22
+  username: "admin"
+  # password or key_file should be set in environment or secure config
+  connection_timeout: 10
+  command_timeout: 30
+  log_paths:
+    firewall: "/var/log/filter.log"
+    system: "/var/log/system.log"
+    dhcp: "/var/log/dhcpd.log"
+    vpn: "/var/log/openvpn.log"
+
+# Agent-specific configurations
+agents:
+  orchestrator:
+    enabled: true
+    heartbeat_timeout: 90  # seconds
+    task_assignment_interval: 10
+    health_check_interval: 30
+    max_concurrent_tasks: 100
+
+  log_analyzer:
+    enabled: true
+    count: 5  # number of instances
+    log_types: ["firewall", "system", "dhcp", "vpn"]
+    batch_size: 100
+    analysis_interval: 60
+    anomaly_threshold: 0.8
+
+  traffic_monitor:
+    enabled: true
+    count: 3
+    interfaces: ["wan", "lan", "opt1"]
+    sampling_interval: 30
+    bandwidth_threshold: 0.9
+    connection_threshold: 1000
+
+  security_scanner:
+    enabled: true
+    count: 2
+    scan_interval: 3600  # 1 hour
+    vulnerability_db_update: 86400  # 24 hours
+    scan_types: ["port_scan", "vulnerability_scan", "compliance_check"]
+
+  intrusion_detector:
+    enabled: true
+    count: 4
+    detection_methods: ["signature", "anomaly", "behavioral"]
+    alert_threshold: "medium"
+    learning_period: 604800  # 7 days
+
+  alert_processor:
+    enabled: true
+    count: 2
+    notification_channels: ["email", "slack", "syslog"]
+    escalation_rules:
+      - severity: "critical"
+        escalate_after: 300  # 5 minutes
+      - severity: "high"
+        escalate_after: 900  # 15 minutes
+
+  remediation_agent:
+    enabled: true
+    count: 2
+    auto_remediation: false  # require approval for actions
+    allowed_actions: ["block_ip", "modify_rule", "isolate_host"]
+    approval_timeout: 1800  # 30 minutes
+
+# Monitoring and alerting
+monitoring:
+  metrics_port: 9090
+  health_check_port: 8080
+  dashboard_port: 8081
+  
+  alerts:
+    email:
+      enabled: false
+      smtp_server: "localhost"
+      smtp_port: 587
+      username: ""
+      password: ""
+      from_address: "pfsense-agents@example.com"
+      to_addresses: ["admin@example.com"]
+    
+    slack:
+      enabled: false
+      webhook_url: ""
+      channel: "#security-alerts"
+    
+    syslog:
+      enabled: true
+      server: "localhost"
+      port: 514
+      facility: "local0"
+
+# Database settings (for knowledge base)
+database:
+  type: "sqlite"  # sqlite, postgresql, mysql
+  path: "/var/lib/pfsense-agents/knowledge_base.db"
+  # For PostgreSQL/MySQL:
+  # host: "localhost"
+  # port: 5432
+  # username: "pfsense_agents"
+  # password: ""
+  # database: "pfsense_agents"
+
+# Security settings
+security:
+  encryption:
+    enabled: true
+    algorithm: "AES-256-GCM"
+    key_rotation_interval: 86400  # 24 hours
+  
+  authentication:
+    method: "api_key"  # api_key, certificate, oauth
+    api_key_length: 32
+    session_timeout: 3600  # 1 hour
+  
+  authorization:
+    rbac_enabled: true
+    default_role: "agent"
+    roles:
+      - name: "admin"
+        permissions: ["*"]
+      - name: "orchestrator"
+        permissions: ["agent:*", "task:*", "system:*"]
+      - name: "agent"
+        permissions: ["message:send", "message:receive", "heartbeat:send"]
+
+# Performance settings
+performance:
+  max_memory_usage: "1GB"
+  max_cpu_usage: 80  # percentage
+  message_queue_size: 10000
+  worker_threads: 4
+  async_pool_size: 100
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "/var/log/pfsense-agents/system.log"
+  max_size: "100MB"
+  backup_count: 5
+  
+  loggers:
+    agent: "INFO"
+    communication: "DEBUG"
+    llm: "INFO"
+    security: "WARNING"
+
+# Development and testing
+development:
+  debug_mode: false
+  mock_pfsense: false
+  mock_llm: false
+  test_data_path: "/opt/pfsense-agents/test_data"
+  
+testing:
+  unit_tests: true
+  integration_tests: true
+  load_tests: false
+  test_timeout: 300
+
