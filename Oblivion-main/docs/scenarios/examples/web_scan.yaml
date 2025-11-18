@@ -1,0 +1,5 @@
+steps:
+  - technique_id: T1046
+    params:
+      cidr_or_host: "10.0.0.0/24"
+      rate: 1000

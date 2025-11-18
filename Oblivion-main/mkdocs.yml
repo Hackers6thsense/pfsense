@@ -1,0 +1,23 @@
+site_name: Oblivion Red-Team
+repo_url: https://github.com/example/oblivion
+theme:
+  name: material
+  logo: assets/oblivion_logo.png
+  palette:
+    scheme: slate
+markdown_extensions:
+  - toc
+  - tables
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Quick Start: quick-start.md
+  - Dashboards: dashboard.md
+  - REST API: api.md
+  - Scenarios: scenarios.md
+  - Safety & Policy: safety.md
+  - Architecture: architecture.md
+  - Instructor Guide: instructor_guide.md

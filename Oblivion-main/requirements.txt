@@ -1,0 +1,12 @@
+click>=8.1.7
+pyyaml>=6.0.1
+requests>=2.31.0
+metasploit-py>=1.0.0
+rich>=13.7.0
+python-nmap>=0.7.1
+tenacity>=8.2.3
+fastapi>=0.110.0
+uvicorn[standard]>=0.24.0
+
+# Developer extra for docs:
+# mkdocs-material

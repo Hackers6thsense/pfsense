@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  msf:
+    image: metasploitframework/metasploit:latest
+    ports:
+      - "55553:55553"
+    environment:
+      - MSF_RPC_USER=msf
+      - MSF_RPC_PASS=msf
+      - MSF_RPC_HOST=0.0.0.0
+      - MSF_RPC_PORT=55553
+    command: >
+      sh -c "msfrpcd -U $${MSF_RPC_USER} -P $${MSF_RPC_PASS} -a 0.0.0.0 -p $${MSF_RPC_PORT} -n -S"
+
+  oblivion:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - msf
+    environment:
+      - MSF_RPC_USER=msf
+      - MSF_RPC_PASS=msf
+      - MSF_RPC_HOST=msf
+      - MSF_RPC_PORT=55553
+      - OBLIVION_API_TOKEN=changeme
