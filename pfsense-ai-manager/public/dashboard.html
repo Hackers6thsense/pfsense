@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pfSense AI Manager</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔥 pfSense AI Manager</h1>
+            <p>Intelligent Network Security Management</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
+            <button class="tab-btn" onclick="switchTab('traffic')">Traffic Analysis</button>
+            <button class="tab-btn" onclick="switchTab('threats')">Security Threats</button>
+            <button class="tab-btn" onclick="switchTab('config')">Configuration</button>
+            <button class="tab-btn" onclick="switchTab('logs')">Logs</button>
+            <button class="tab-btn" onclick="switchTab('chat')">AI Assistant</button>
+        </nav>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <h2>System Dashboard</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>System Status</h3>
+                    <div id="system-status">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3>AI Providers</h3>
+                    <div id="ai-providers">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3>Recent Threats</h3>
+                    <div id="threat-summary">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3>Network Health</h3>
+                    <div id="network-health">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traffic Analysis Tab -->
+        <div id="traffic" class="tab-content">
+            <h2>Network Traffic Analysis</h2>
+            <button onclick="analyzeTraffic()" class="btn-primary">Analyze Traffic</button>
+            <div id="traffic-results" class="results"></div>
+        </div>
+
+        <!-- Threats Tab -->
+        <div id="threats" class="tab-content">
+            <h2>Security Threat Detection</h2>
+            <button onclick="detectThreats()" class="btn-primary">Scan for Threats</button>
+            <div id="threats-results" class="results"></div>
+        </div>
+
+        <!-- Configuration Tab -->
+        <div id="config" class="tab-content">
+            <h2>Configuration Analysis & Recommendations</h2>
+            <button onclick="analyzeConfig()" class="btn-primary">Analyze Configuration</button>
+            <button onclick="getRecommendations()" class="btn-secondary">Get Recommendations</button>
+            <div id="config-results" class="results"></div>
+        </div>
+
+        <!-- Logs Tab -->
+        <div id="logs" class="tab-content">
+            <h2>Firewall Log Analysis</h2>
+            <div class="search-box">
+                <input type="text" id="log-search" placeholder="Search logs with natural language...">
+                <button onclick="searchLogs()" class="btn-primary">Search</button>
+            </div>
+            <button onclick="analyzeLogs()" class="btn-secondary">Analyze Recent Logs</button>
+            <button onclick="getLogPatterns()" class="btn-secondary">Show Patterns</button>
+            <div id="logs-results" class="results"></div>
+        </div>
+
+        <!-- Chat Tab -->
+        <div id="chat" class="tab-content">
+            <h2>AI Assistant Chat</h2>
+            <div id="chat-window" class="chat-window">
+                <div id="chat-messages"></div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-message" placeholder="Ask the AI assistant...">
+                <button onclick="sendChat()" class="btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

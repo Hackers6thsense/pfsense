@@ -1,0 +1,22 @@
+{
+  "name": "joebruce/pfsense-ai-manager",
+  "description": "pfSense AI Management Tool with Mistral, Groq, and Gemini API integration",
+  "require": {
+    "php": ">=8.0",
+    "guzzlehttp/guzzle": "^7.0",
+    "vlucas/phpdotenv": "^5.0",
+    "monolog/monolog": "^2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PfSenseAI\\": "src/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit tests/",
+    "start": "php -S localhost:8000 -t public/"
+  }
+}
